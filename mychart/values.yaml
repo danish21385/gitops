@@ -1,0 +1,28 @@
+deployment:
+  nginx:
+    image:
+      repository: nginx
+      tag: latest
+  replicas: 1
+index:
+  indexHtml: |-
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>DEV</title>
+    </head>
+    <body>
+        <h1>Dev Remake</h1>
+        <p>This page is served from a ConfigMap.</p>
+    </body>
+    </html>
+kubernetesClusterDomain: cluster.local
+service:
+  ports:
+  - nodePort: 30002
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  type: NodePort
