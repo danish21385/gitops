@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-dev
+spec:
+  generators:
+    - list:
+        elements:
+          - cluster: dev
+            url: https://kubernetes.default.svc
+            path: ./mychart
+  template:
+    metadata:
+      name: nginx-{{cluster}} # Application name based on cluster
+    spec:
+      project: default
+      source:
+        repoURL: 'git@github.com:danish21385/gitops.git' # Replace with your Git repo URL
+        targetRevision: dev
+        path: '{{path}}' # Use the path for the specific directory
+      destination:
+        server: '{{url}}' # Set the server URL dynamically
+        namespace: default # Target namespace
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+

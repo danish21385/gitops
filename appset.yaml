@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: nginx-applicationset-cluster
+spec:
+  generators:
+    - clusters: {} # Automatically target all clusters registered in ArgoCD
+  template:
+    metadata:
+      name: nginx-{{name}} # Application name, dynamically based on cluster name
+    spec:
+      project: default
+      source:
+        repoURL: 'git@github.com:danish21385/gitops.git' # Replace with your repository URL
+        targetRevision: HEAD
+        path: . # Path to your NGINX manifests
+      destination:
+        server: '{{server}}' # Dynamically set the cluster server URL
+        namespace: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
