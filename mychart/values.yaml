@@ -11,10 +11,10 @@ index:
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome to PS4</title>
+        <title>DEV</title>
     </head>
     <body>
-        <h1>MGS 3 Remake</h1>
+        <h1>Dev Remake</h1>
         <p>This page is served from a ConfigMap.</p>
     </body>
     </html>
