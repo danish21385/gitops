@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: nginx-dev
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: dev
@@ -14,3 +12,9 @@ spec:
     path: mychart/dev
     repoURL: git@github.com:danish21385/gitops.git
     targetRevision: dev
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
