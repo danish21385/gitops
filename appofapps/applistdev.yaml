@@ -11,6 +11,6 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    path: ./mychart/dev
+    path: mychart/dev
     repoURL: git@github.com:danish21385/gitops.git
     targetRevision: dev
