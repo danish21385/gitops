@@ -1,43 +1,34 @@
 apiVersion: argoproj.io/v1alpha1
-kind: Application
+kind: ApplicationSet
 metadata:
-  name: nginx-dev
-  namespace: argocd
+  name: nginx-app
 spec:
-  destination:
-    namespace: dev
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: mychart/dev
-    repoURL: git@github.com:danish21385/gitops.git
-    targetRevision: dev
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
+  generators:
+    - list:
+        elements:
+          - cluster: dev
+            url: https://kubernetes.default.svc
+            path: ./mychart/dev
+          - cluster: qa
+            url: https://kubernetes.default.svc
+            path: ./mychart/qa
+          
+  template:
+    metadata:
+      name: nginx-{{cluster}} # Application name based on cluster
+    spec:
+      project: default
+      source:
+        repoURL: 'git@github.com:danish21385/gitops.git' # Replace with your Git repo URL
+        targetRevision: dev
+        path: '{{path}}' # Use the path for the specific directory
+      destination:
+        server: '{{url}}' # Set the server URL dynamically
+        namespace: '{{cluster}}' # Target namespace
+      syncPolicy:
+        syncOptions:
+         - CreateNamespace=true
+        automated:
+          prune: true
+          selfHeal: true
 
----
-
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: nginx-qa
-  namespace: argocd
-spec:
-  destination:
-    namespace: qa
-    server: https://kubernetes.default.svc
-  project: default
-  source:
-    path: mychart/qa
-    repoURL: git@github.com:danish21385/gitops.git
-    targetRevision: dev
-  syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-    automated:
-      prune: true
-      selfHeal: true
