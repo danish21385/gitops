@@ -2,7 +2,7 @@ deployment:
   nginx:
     image:
       repository: nginx
-      tag: perl
+      tag: alpine-perl 
   replicas: 1
 index:
   indexHtml: |-
