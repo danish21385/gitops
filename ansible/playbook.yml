@@ -1,0 +1,29 @@
+---
+- name: Install and configure Apache HTTP Server on CentOS
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure the httpd package is installed
+      yum:
+        name: httpd
+        state: present
+
+    - name: Start the httpd service
+      service:
+        name: httpd
+        state: started
+
+    - name: Enable the httpd service at boot
+      service:
+        name: httpd
+        enabled: yes
+
+    - name: Allow HTTP traffic on port 80 in the firewall
+      firewalld:
+        port: 80/tcp
+        permanent: true
+        state: enabled
+
+    - name: Reload the firewall to apply changes
+      command: firewall-cmd --reload
+      when: ansible_facts['distribution'] == 'CentOS'
