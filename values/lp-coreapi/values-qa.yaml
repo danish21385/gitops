@@ -1,0 +1,6 @@
+service:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+  type: NodePort
