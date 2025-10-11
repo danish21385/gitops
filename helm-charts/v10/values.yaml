@@ -1,9 +1,4 @@
-deployment:
-  nginx:
-    image:
-      repository: nginx
-      tag: latest
-  replicas: 2
+
 index:
   indexHtml: |-
     <!DOCTYPE html>
