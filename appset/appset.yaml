@@ -40,19 +40,19 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
-      syncPolicy:
-        syncOptions:
-          - CreateNamespace=true            # Auto-create namespace if it doesn't exist
-          - PruneLast=true                  # Prune resources only after applying all changes
-          - ApplyOutOfSyncOnly=true         # Apply only out-of-sync resources
-          - Validate=false                  # Skip resource validation before apply
-          - RespectIgnoreDifferences=true   # Skip syncing fields listed under ignoreDifferences
-          - Replace=true                    # Use kubectl replace instead of apply
-          - ServerSideApply=true            # Use server-side apply instead of client-side
-          - FailOnSharedResource=true       # Fail sync if shared resources exist
-          - PrunePropagationPolicy=foreground  # Control pruning behavior
-          - PruneLast=true                  # Wait to prune until all apply operations succeed
-          - ApplyOnly=true                  # Don’t prune, just apply
-        automated:
-          prune: true
-          selfHeal: true
+      # syncPolicy:
+      #   syncOptions:
+      #     - CreateNamespace=true            # Auto-create namespace if it doesn't exist
+      #     - PruneLast=true                  # Prune resources only after applying all changes
+      #     - ApplyOutOfSyncOnly=true         # Apply only out-of-sync resources
+      #     - Validate=false                  # Skip resource validation before apply
+      #     - RespectIgnoreDifferences=true   # Skip syncing fields listed under ignoreDifferences
+      #     - Replace=true                    # Use kubectl replace instead of apply
+      #     - ServerSideApply=true            # Use server-side apply instead of client-side
+      #     - FailOnSharedResource=true       # Fail sync if shared resources exist
+      #     - PrunePropagationPolicy=foreground  # Control pruning behavior
+      #     - PruneLast=true                  # Wait to prune until all apply operations succeed
+      #     - ApplyOnly=true                  # Don’t prune, just apply
+      #   automated:
+      #     prune: true
+      #     selfHeal: true
