@@ -1,3 +1,10 @@
+deployment:
+  nginx:
+    image:
+      repository: nginx
+      tag: stable-alpine3.21-slim
+  replicas: 3
+
 service:
   ports:
     - port: 80
