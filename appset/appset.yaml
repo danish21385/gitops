@@ -1,0 +1,51 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: webapp
+  namespace: argocd
+spec:
+  generators:
+    - matrix:
+        generators:
+          # List of namespaces
+          - list:
+              elements:
+                - namespace: leasepoint-dev
+                - namespace: leasepoint-qa
+          # List of APIs
+          - list:
+              elements:
+                - name: lp-coreapi
+                # - name: lp-masterdatapi
+                # - name: lp-gridsapi
+                # - name: lp-iamapi
+                # - name: lp-logapi
+                # - name: lp-tntcatlogapi
+
+          - list:
+              elements:
+                - env: dev
+                - env: qa
+
+
+  template:
+    metadata:
+      name: '{{name}}-{{env}}'
+    spec:
+      project: default
+      source:
+        repoURL: git@github.com:danish21385/gitops.git
+        targetRevision: main
+        path: helm-charts
+        helm:
+          valueFiles:       
+            - values/{{name}}/values-{{env}}.yaml
+      destination:
+        server: https://kubernetes.default.svc
+        namespace: '{{namespace}}'
+      # syncPolicy:
+      #   automated:
+      #     prune: true
+      #     selfHeal: true
+      #   # syncOptions:
+      #   #   - CreateNamespace=true
