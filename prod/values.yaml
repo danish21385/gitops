@@ -21,7 +21,7 @@ index:
 kubernetesClusterDomain: cluster.local
 service:
   ports:
-    port: 80
-    protocol: TCP
-    targetPort: 80
+    - port: 80
+      protocol: TCP
+      targetPort: 80
   type: NodePort
