@@ -11,7 +11,9 @@ spec:
           - list:
               elements:
                 - namespace: leasepoint-dev
+                  env: dev
                 - namespace: leasepoint-qa
+                  env: qa
           # List of APIs
           - list:
               elements:
@@ -22,11 +24,6 @@ spec:
                 # - name: lp-logapi
                 # - name: lp-tntcatlogapi
 
-          - list:
-              elements:
-                - env: dev
-                - env: qa
-
 
   template:
     metadata:
@@ -36,10 +33,10 @@ spec:
       source:
         repoURL: git@github.com:danish21385/gitops.git
         targetRevision: main
-        path: helm-charts
+        path: helm-charts/v10
         helm:
           valueFiles:       
-            - values/{{name}}/values-{{env}}.yaml
+            - ../../values/{{name}}/values-{{env}}.yaml
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{namespace}}'
